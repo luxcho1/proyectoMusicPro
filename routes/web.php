@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\BoletaController;
 use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,12 @@ Route::get('/', [ProductoController::class, 'index'])->name('home');
 //Route::group(['middleware' => 'auth.users'], function() {
 
     Route::resource('producto', ProductoController::class);
-    
+
     Route::get('/home', [ProductoController::class, 'index'])->name('home');
+    Route::get('añadir_al_carrito/{id}', [ProductoController::class, 'añadirCarrito'])->name('añadir_al_carrito');
+    Route::delete('remove-from-cart', 'ProductoController@remove');
+    Route::get('carro', [ProductoController::class, 'carro'])->name('carro');
+    
 //});
 
 

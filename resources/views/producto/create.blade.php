@@ -5,7 +5,7 @@
 
 <form action="{{ url('/producto') }}" method="post" enctype="multipart/form-data">
 @csrf
-@include('producto.form',['modo'=>'Crear']);
+@include('producto.form',['modo'=>'Ingresar'])
 </form>
 </div>
 @endsection

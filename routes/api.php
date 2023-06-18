@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductoController;
 |
 */
 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -27,6 +28,7 @@ Route::post('/producto/insert',[ProductoController::class, 'insertProducto']);
 Route::put('/producto/update/{id}',[ProductoController::class, 'updateProducto']);
 //delete
 Route::delete('/producto/delete/{id}',[ProductoController::class, 'deleteProducto']);
+
 
 
 

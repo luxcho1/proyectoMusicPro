@@ -16,7 +16,7 @@ Instalacion del programa
 
 `git clone https://github.com/luxcho1/proyectoMusicPro.git`
 
-####Instalacion componentes basicos
+#### Instalacion componentes basicos
 
 `composer install`
 `npm install`

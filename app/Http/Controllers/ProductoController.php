@@ -9,45 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
-    public function getProducto(){
-        return response()->json(Producto::all(),200);
-    }
-
-    public function getProductoid($id){
-        $producto = Producto::find($id);
-        if(is_null($producto)){
-            return response()->json(['message'=>'Registro no encontrado'],404);
-        }
-        return response()->json($producto,200);
-    }
-    
-    public function insertProducto(Request $request){
-        $producto = Producto::create($request->all());
-        if(is_null($producto)){
-            return response()->json(['message'=>'Hubo un problema para ingresar'],404);
-        }
-        return response()->json($producto,200);
-    }
-
-    public function updateProducto(Request $request, $id){
-        $producto = Producto::find($id);
-        if(is_null($producto)){
-            return response()->json(['message'=>'Registro no encontrado'],404);
-        }
-        $producto->update($request->all());
-        return response()->json($producto,200);
-    }
-
-    public function deleteProducto($id){
-        $producto = Producto::find($id);
-        if(is_null($producto)){
-            return response()->json(['message'=>'Registro no encontrado'],404);
-        }
-        $producto->delete();
-        return response()->json(['message'=>'Registro eliminado'],200);
-    }
-    
-    
     /**
      * Display a listing of the resource.
      *
@@ -75,6 +36,7 @@ class ProductoController extends Controller
     {
         //
         return view('producto.create');
+        
     }
     
 
@@ -86,6 +48,13 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        
+        
+        
+        
+        
+        
+        
         //
         $campos=[
             'Nombre' => 'required|string|max:100',
@@ -208,4 +177,100 @@ class ProductoController extends Controller
         }
         return redirect('producto')->with('mensaje','Producto borrado correctamente');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function getProducto(){
+        return response()->json(Producto::all(),200);
+    }
+
+    public function getProductoid($id){
+        $producto = Producto::find($id);
+        if(is_null($producto)){
+            return response()->json(['message'=>'Registro no encontrado'],404);
+        }
+        return response()->json($producto,200);
+    }
+    
+    public function insertProducto(Request $request){
+        $producto = Producto::create($request->all());
+        if(is_null($producto)){
+            return response()->json(['message'=>'Hubo un problema para ingresar'],404);
+        }
+        return response()->json($producto,200);
+    }
+
+    public function updateProducto(Request $request, $id){
+        $producto = Producto::find($id);
+        if(is_null($producto)){
+            return response()->json(['message'=>'Registro no encontrado'],404);
+        }
+        $producto->update($request->all());
+        return response()->json($producto,200);
+    }
+
+    public function deleteProducto($id){
+        $producto = Producto::find($id);
+        if(is_null($producto)){
+            return response()->json(['message'=>'Registro no encontrado'],404);
+        }
+        $producto->delete();
+        return response()->json(['message'=>'Registro eliminado'],200);
+    }
+
+    
+    
+    
+    
+    
+    public function carro()
+    {
+        return view('carro');
+    }
+    
+    public function añadirCarrito($id){
+        $producto = Producto::findOrFail($id);
+
+        $carro = session()->get('carro', []);
+ 
+        if(isset($carro[$id])) {
+            $carro[$id]['quantity']++;
+        }  else {
+            $carro[$id] = [
+                "Nombre" => $producto->Nombre,
+                "Foto" => $producto->Foto,
+                "Precio" => $producto->Precio,
+                "quantity" => 1
+            ];
+        }
+
+        //['Nombre','Codigo','Descripcion','Precio','Stock','Foto'];
+
+        session()->put('carro', $carro);
+        return redirect()->back()->with('success', 'Producto añadido al carro correctamente');
+    }
+
+    public function remove(Request $request)
+    {
+        if($request->id) {
+            $carro = session()->get('carro');
+            if(isset($carro[$request->id])) {
+                unset($carro[$request->id]);
+                session()->put('carro', $carro);
+            }
+            session()->flash('success', 'Product removed successfully');
+        }
+    }
+    
 }
