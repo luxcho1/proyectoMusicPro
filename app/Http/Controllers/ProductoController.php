@@ -19,7 +19,7 @@ class ProductoController extends Controller
         //consumir api saludo profe
         
         //
-        $datos['productos']=Producto::paginate(5);
+        $datos['productos']=Producto::paginate(1000);
         $response = Http::get('https://musicpro.bemtorres.win/api/v1/test/saludo');
         $saludo = $response -> json();
         return view('producto.index', $datos, compact('saludo'));
@@ -48,13 +48,6 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        
-        
-        
-        
-        
-        
-        
         //
         $campos=[
             'Nombre' => 'required|string|max:100',
@@ -180,21 +173,15 @@ class ProductoController extends Controller
 
 
 
+    //CREAR API REST PRODUCTO
 
 
-
-
-
-
-
-
-
-
-
+    //MOSTRAR API PRODUCTOS
     public function getProducto(){
         return response()->json(Producto::all(),200);
     }
 
+    //MOSTRAR API PRODUCTOS BY ID
     public function getProductoid($id){
         $producto = Producto::find($id);
         if(is_null($producto)){
@@ -203,6 +190,7 @@ class ProductoController extends Controller
         return response()->json($producto,200);
     }
     
+    //INSERTAR API PRODUCTOS
     public function insertProducto(Request $request){
         $producto = Producto::create($request->all());
         if(is_null($producto)){
@@ -211,6 +199,7 @@ class ProductoController extends Controller
         return response()->json($producto,200);
     }
 
+    //ACTUALIZAR API PRODUCTOS
     public function updateProducto(Request $request, $id){
         $producto = Producto::find($id);
         if(is_null($producto)){
@@ -220,6 +209,7 @@ class ProductoController extends Controller
         return response()->json($producto,200);
     }
 
+    //ELIMINAR API PRODUCTOS
     public function deleteProducto($id){
         $producto = Producto::find($id);
         if(is_null($producto)){
@@ -233,7 +223,7 @@ class ProductoController extends Controller
     
     
     
-    
+    //CARRO DE COMPRAS
     public function carro()
     {
         return view('carro');
