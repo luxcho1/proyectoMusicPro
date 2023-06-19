@@ -34,6 +34,7 @@ Route::get('/', [ProductoController::class, 'index'])->name('home');
 //Route::group(['middleware' => 'auth.users'], function() {
 
     Route::resource('producto', ProductoController::class);
+    Route::resource('carro', BoletaController::class);
 
     Route::get('/home', [ProductoController::class, 'index'])->name('home');
     Route::get('añadir_al_carrito/{id}', [ProductoController::class, 'añadirCarrito'])->name('añadir_al_carrito');
