@@ -8,7 +8,7 @@
 
 <body>
     <header>
-    
+       
     </header>
 
 
@@ -16,8 +16,8 @@
         <div class="container">
             <h1>Lista De Productos</h1>
             {{--<h2>Consumo de api: {{ $saludo['message'] }}</h2>---}}
-            
-            @if(Session::has('mensaje'))    
+
+            @if(Session::has('mensaje'))
             <div class="alert alert-success alert-dismissible" role="alert">
                 {{ Session::get('mensaje') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
@@ -37,14 +37,14 @@
                 </div>
 
                 {{--CARRO DE COMPRAS--}}
-                <div class="col-sm"> 
+                <div class="col-sm">
                     <button type="button" class="btn btn-primary" data-bs-toggle="dropdown">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito <span class="badge badge-pill badge-danger">{{ count((array) session('carro')) }}</span>
                     </button>
 
-                    
+
                     <div class="dropdown-menu">
-                        
+
                         {{--TOTAL--}}
                         <div class="row total-header-section">
                             @php $total = 0 @endphp
@@ -55,20 +55,20 @@
                                 <h2>Total: ${{ $total }}</h2>
                             </div>
                         </div>
-                        
-                        
+
+
                         {{--PRODUCTOS--}}
                         @if(session('carro'))
                             @foreach(session('carro') as $id => $details)
                             <div class="container text-center">
                                 <div class="row">
-                                    {{--FOTO--}}  
+                                    {{--FOTO--}}
                                     <div class="col">
-                                        <img class="img-thumbnail img-fluid" src="{{ asset('storage') }}/{{ $details['Foto'] }}" width="100" alt="" /> 
+                                        <img class="img-thumbnail img-fluid" src="{{ asset('storage') }}/{{ $details['Foto'] }}" width="100" alt="" />
                                     </div>
 
 
-                                    {{--NOMBRE--}}    
+                                    {{--NOMBRE--}}
                                     <div class="col">
                                         <h5> {{ $details['Nombre'] }} </h5>
                                         <div class="row">
@@ -82,12 +82,12 @@
                                     </div>
 
 
-                                    {{--BORRAR--}} 
+                                    {{--BORRAR--}}
                                     <div class="col">
                                         <button type="button" class="btn btn-danger remove-from-cart" >Eliminar</button>
                                     </div>
 
-                                    
+
                                 </div>
                               </div>
                             @endforeach
@@ -103,30 +103,30 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             {{--CRUD DE BODEGA--}}
             <div class="container">
                 @if(session('success'))
                     <div class="alert alert-success">
                     {{ session('success') }}
-                    </div> 
+                    </div>
                 @endif
             </div>
             @yield('scripts')
-        
+
             <br>
             <table class="table table-light">
                 <thead class="thead-light">
@@ -138,11 +138,11 @@
                         <th>Precio</th>
                         <th>Stock</th>
                         <th>Acciones</th>
-                        
+
                     </tr>
                 </thead>
-        
-        
+
+
                 <tbody>
                     @foreach($productos as $producto)
                     <tr>
@@ -158,15 +158,15 @@
                             <a href="{{ url('/producto/'.$producto->id.'/edit') }}" class="btn btn-warning">
                                 Editar
                             </a>
-            
+
                             <form action="{{ url('/producto/'.$producto->id) }}" class="d-inline" method="post">
                                 @csrf
                                 {{ method_field('DELETE') }}
                                 <input class="btn btn-danger" type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar">
                             </form>
-            
+
                             <p
-                                class="btn-holder"><a href="{{ route('añadir_al_carrito', $producto->id) }}" class="btn btn-primary btn-block text-center" role="button">Añadir al carrito</a> 
+                                class="btn-holder"><a href="{{ route('añadir_al_carrito', $producto->id) }}" class="btn btn-primary btn-block text-center" role="button">Añadir al carrito</a>
                             </p>
                         </td>
                     </tr>
@@ -174,11 +174,11 @@
                 </tbody>
             </table>
         </div>
-        <script type="text/javascript">   
-            
-            
-            
-            
+        <script type="text/javascript">
+
+
+
+
 
 
 
@@ -198,7 +198,7 @@
         });
 
 
-            
+
         </script>
         @endsection
     </main>

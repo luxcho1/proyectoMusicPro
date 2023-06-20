@@ -7,14 +7,95 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
+
+/**
+* @OA\Info(
+*             title="API Producto MusicPro", 
+*             version="1.0",
+*             description="Documentacion de como usar la API Bodega"
+* )
+*
+* @OA\Server(url="http://127.0.0.1:8000")
+*/
 class ProductoController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+ /**
+     * Listado de todos los productos
+     * @OA\Get (
+     *     path="/api/producto",
+     *     tags={"Producto"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Peticion hecha correctamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="number",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="Nombre",
+     *                         type="string",
+     *                         example="Bateria"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="Codigo",
+     *                         type="string",
+     *                         example="sdh2DF23FF"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="Descripcion",
+     *                         type="string",
+     *                         example="Color: Blanco"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="Precio",
+     *                         type="number",
+     *                         example="2500"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="Stock",
+     *                         type="number",
+     *                         example="4"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="Foto",
+     *                         type="string",
+     *                         example="https://picsum.photos/200/300"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="created_at",
+     *                         type="string",
+     *                         example="2023-02-23T00:09:16.000000Z"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="updated_at",
+     *                         type="string",
+     *                         example="2023-02-23T12:33:45.000000Z"
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
+        //php artisan l5-swagger:generate
+    
+    
+    
+    
+     public function index()
     {
         //consumir api saludo profe
         
@@ -23,6 +104,8 @@ class ProductoController extends Controller
         $response = Http::get('https://musicpro.bemtorres.win/api/v1/test/saludo');
         $saludo = $response -> json();
         return view('producto.index', $datos, compact('saludo'));
+
+        
         
         
     }
@@ -46,7 +129,61 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    
+    
+       /**
+     * Registrar la información de un producto
+     * @OA\Post (
+     *     path="/api/producto",
+     *     tags={"Producto"},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="nombres",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="apellidos",
+     *                          type="string"
+     *                      )
+     *                 ),
+     *                 example={
+     *                     "nombres":"Aderson Felix",
+     *                     "apellidos":"Jara Lazaro"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="CREATED",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="nombres", type="string", example="Aderson Felix"),
+     *              @OA\Property(property="apellidos", type="string", example="Jara Lazaro"),
+     *              @OA\Property(property="created_at", type="string", example="2023-02-23T00:09:16.000000Z"),
+     *              @OA\Property(property="updated_at", type="string", example="2023-02-23T12:33:45.000000Z")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="UNPROCESSABLE CONTENT",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="The apellidos field is required."),
+     *              @OA\Property(property="errors", type="string", example="Objeto de errores"),
+     *          )
+     *      )
+     * )
+     */
+    
+    
+    
+    
+     public function store(Request $request)
     {
         //
         $campos=[
@@ -84,9 +221,47 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    
+    
+    
+    
+    /**
+     * Mostrar la información de un producto
+     * @OA\Get (
+     *     path="/api/producto/{id}",
+     *     tags={"Producto"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="Nombre", type="string", example="Bateria"),
+     *              @OA\Property(property="Codigo", type="string", example="KSDH22D2"),
+     *              @OA\Property(property="created_at", type="string", example="2023-02-23T00:09:16.000000Z"),
+     *              @OA\Property(property="updated_at", type="string", example="2023-02-23T12:33:45.000000Z")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="NOT FOUND",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="No query results for model [App\\Models\\Producto] #id"),
+     *          )
+     *      )
+     * )
+     */
+    
+    
+     public function show(Producto $producto)
     {
         //
+        return $producto;
     }
 
     /**
@@ -111,7 +286,67 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    
+    
+    /**
+     * Actualizar la información de un Producto
+     * @OA\Put (
+     *     path="/api/producto/{id}",
+     *     tags={"Producto"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="nombres",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="apellidos",
+     *                          type="string"
+     *                      )
+     *                 ),
+     *                 example={
+     *                     "nombres": "Aderson Felix Editado",
+     *                     "apellidos": "Jara Lazaro Editado"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="nombres", type="string", example="Aderson Felix Editado"),
+     *              @OA\Property(property="apellidos", type="string", example="Jara Lazaro Editado"),
+     *              @OA\Property(property="created_at", type="string", example="2023-02-23T00:09:16.000000Z"),
+     *              @OA\Property(property="updated_at", type="string", example="2023-02-23T12:33:45.000000Z")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="UNPROCESSABLE CONTENT",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="The apellidos field is required."),
+     *              @OA\Property(property="errors", type="string", example="Objeto de errores"),
+     *          )
+     *      )
+     * )
+     */
+    
+    
+    
+    
+     public function update(Request $request, $id)
     {
         //
         $campos=[
@@ -158,7 +393,37 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    
+    
+    
+     /**
+     * Eliminar la información de un Producto
+     * @OA\Delete (
+     *     path="/api/producto/{id}",
+     *     tags={"Producto"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="NO CONTENT"
+     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="NOT FOUND",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="No se pudo realizar correctamente la operación"),
+     *          )
+     *      )
+     * )
+     */
+    
+    
+    
+     public function destroy($id)
     {
         //
         $producto=Producto::findOrFail($id);
