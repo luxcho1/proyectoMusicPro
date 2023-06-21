@@ -191,7 +191,8 @@
                     method: "DELETE",
                     data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
                     success: function (response) {
-                        window.location.reload();
+                        console.log(response);
+                        // window.location.reload();
                     }
                 });
             }

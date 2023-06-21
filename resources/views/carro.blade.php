@@ -29,7 +29,7 @@
                 @foreach(session('carro') as $id => $details)
                     @php $total += $details['Precio'] * $details['quantity'] @endphp
                     <tr data-id="{{ $id }}">
-                        
+                        {{-- <input type="hidden" name= value=" @json()"> --}}
                         {{--INSERTAR FOTO--}}
                         <td>
                             <img class="img-thumbnail img-fluid" src="{{ asset('storage') }}/{{ $details['Foto'] }}" width="100" alt="">
