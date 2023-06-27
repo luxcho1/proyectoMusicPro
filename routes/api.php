@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\EncomiendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,5 @@ Route::delete('/producto/delete/{id}',[ProductoController::class, 'deleteProduct
 
 
 
+Route::get('/encomienda',[EncomiendaController::class, 'getEncomienda']);
 

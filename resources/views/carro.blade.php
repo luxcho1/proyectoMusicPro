@@ -77,7 +77,8 @@
 
 
     <a href="{{ url('/') }}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Seguir Comprando</a>
-    <input class="btn btn-success" type="submit" value="Crear Boleta">
+    {{--<input class="btn btn-success" type="submit" value="Crear Boleta">--}}
+    <a class="btn btn-primary" href="{{ url('/encomienda') }}">Crear Encomienda</a>
 </form>
 </div>
 @endsection
