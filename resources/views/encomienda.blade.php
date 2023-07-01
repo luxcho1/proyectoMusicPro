@@ -6,7 +6,7 @@
 
 
 
-<form action="{{ url('/encomienda') }}" method="post" >
+<form action="{{ route('encomienda.store') }}" method="post" >
 @csrf
 <div class="container">
     <div class="form-group">
@@ -40,12 +40,9 @@
     </div>
     <br>
     <div>
-        <a class="btn btn-primary" href="{{ url('home/') }}">Regresar</a>    
+        <a class="btn btn-primary" href="{{ url('home/') }}">Regresar</a>
         <input class="btn btn-success" type="submit" value="Enviar Encomienda" href="{{ url('home/') }}">
-            
+
     </div>
 </div>
-
-
-
 @endsection

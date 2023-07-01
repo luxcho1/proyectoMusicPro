@@ -3,20 +3,17 @@
 <script src="assets/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 
 
 <body>
     <header>
-       
+
     </header>
-
-
     <main>
         <div class="container">
-            <h1>Lista De Productos</h1>
-            {{--<h2>Consumo de api: {{ $saludo['message'] }}</h2>---}}
-
             @if(Session::has('mensaje'))
             <div class="alert alert-success alert-dismissible" role="alert">
                 {{ Session::get('mensaje') }}
@@ -27,21 +24,12 @@
             @endif
 
             <div class="row">
-
-                <div class="col-sm">
-                    <a href="{{ url('producto/create') }}" class="btn btn-success">Registrar nuevo producto</a>
-                </div>
-
-
-                <div class="col-sm">
-                </div>
-
                 {{--CARRO DE COMPRAS--}}
                 <div class="col-sm">
                     <button type="button" class="btn btn-primary" data-bs-toggle="dropdown">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito <span class="badge badge-pill badge-danger">{{ count((array) session('carro')) }}</span>
-                    </button>
-
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Carro
+                        <span class="badge badge-pill badge-danger">{{ count((array) session('carro')) }}</span>
+                      </button>
 
                     <div class="dropdown-menu">
 
@@ -55,7 +43,6 @@
                                 <h2>Total: ${{ $total }}</h2>
                             </div>
                         </div>
-
 
                         {{--PRODUCTOS--}}
                         @if(session('carro'))
@@ -84,40 +71,62 @@
 
                                     {{--BORRAR--}}
                                     <div class="col">
-                                        <button type="button" class="btn btn-danger remove-from-cart" >Eliminar</button>
+                                        <form action="{{ route('eliminar-porducto') }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="id" value="{{ $id }}">
+                                            <button type="submit" class="btn btn-danger remove-from-cart" >Eliminar</button>
+                                        </form>
                                     </div>
-
-
                                 </div>
                               </div>
                             @endforeach
                         @endif
-
-
                         {{--MOSTRAR EL TOTAL DE CARRO--}}
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                <a href="{{ route('carro') }}" class="btn btn-primary btn-block">Mostrar todos los productos</a>
+                                <a href="{{ route('carro') }}" class="btn btn-primary btn-block">Ir a mi carro</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="container" style="text-align: center">
+                <h1>Inventario Bodega</h1>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
+            {{--MOSTRAR API PRODUCTOS--}}
+            <h2 style="padding-block-start: 5%">Mostrar productos API</h2>
+            {{-- <h5>Consumo de api status: "{{ $apiProducto['message'] }}"</h5> --}}
+            <table class="table table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Foto</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($apiProducto['productos'] as $producto)
+                    <tr>
+                        <td>
+                            <img class="img-thumbnail img-fluid" src="{{ asset($producto['asset'])}}" width="100" alt="">
+                        </td>
+                        <td>{{ $producto['codigo'] }}</td>
+                        <td>{{ $producto['nombre'] }}</td>
+                        <td>{{ $producto['descripcion'] }}</td>
+                        <td>{{ $producto['precio'] }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
 
             {{--CRUD DE BODEGA--}}
+            <h1 style="padding-block-start: 5%">Mostrar productos de forma local</h1>
             <div class="container">
                 @if(session('success'))
                     <div class="alert alert-success">
@@ -176,32 +185,29 @@
         </div>
         <script type="text/javascript">
 
+            function NewTab() {
+                window.open(
+            "https://musicpro.bemtorres.win/transporte", "_blank");
+        }
 
-
-
-
-
-
-            $(".remove-from-cart").click(function (e) {
-            e.preventDefault();
-            var ele = $(this);
-            if(confirm("Are you sure")) {
-                $.ajax({
-                    url: '{{ url('remove-from-cart') }}',
-                    method: "DELETE",
-                    data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
-                    success: function (response) {
-                        console.log(response);
-                        // window.location.reload();
-                    }
-                });
-            }
-        });
-
-
-
+        //     $(".remove-from-cart").click(function (e) {
+        //     e.preventDefault();
+        //     var ele = $(this);
+        //     if(confirm("Are you sure")) {
+        //         $.ajax({
+        //             url: '{{ url('remove-from-cart') }}',
+        //             method: "DELETE",
+        //             data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id")},
+        //             success: function (response) {
+        //                 console.log(response);
+        //                 // window.location.reload();
+        //             }
+        //         });
+        //     }
+        // });
         </script>
         @endsection
     </main>
 </body>
+
 

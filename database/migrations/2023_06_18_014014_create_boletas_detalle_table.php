@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('encomiendas', function (Blueprint $table) {
+        Schema::create('detalle_boleta', function (Blueprint $table) {
             $table->id();
-
-            $table->string('nombre_origen');
-            $table->string('direccion_origen');
-            $table->string('nombre_destino');
-            $table->string('direccion_destino');
-            $table->string('comentario');
-            $table->json('info')->nullable();
-            $table->string('codigo_seguimiento')->nullable();
+            $table->integer('id_producto');
             $table->integer('id_boleta');
+            $table->integer('cantidad');
+            $table->integer('precio');
+            $table->integer('total');
             $table->timestamps();
         });
     }
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('encomiendas');
+        Schema::dropIfExists('boletas');
     }
 };

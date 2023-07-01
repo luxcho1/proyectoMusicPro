@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 /**
 * @OA\Info(
-*             title="API Producto MusicPro", 
+*             title="API Producto MusicPro",
 *             version="1.0",
 *             description="Documentacion de como usar la API Bodega"
 * )
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 */
 class ProductoController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -91,23 +91,42 @@ class ProductoController extends Controller
      * )
      */
         //php artisan l5-swagger:generate
-    
-    
-    
-    
+
+
+
+
      public function index()
     {
-        //consumir api saludo profe
-        
         //
+        //Consumir Productos localmente
         $datos['productos']=Producto::paginate(1000);
-        $response = Http::get('https://musicpro.bemtorres.win/api/v1/test/saludo');
-        $saludo = $response -> json();
-        return view('producto.index', $datos, compact('saludo'));
 
-        
-        
-        
+        $response = Http::get('https://musicpro.bemtorres.win/api/v1/bodega/producto');
+        $apiProducto = $response->json();
+
+
+        // dump($apiProducto);
+        //return $apiProducto;
+        return view('producto.index',
+                    compact('apiProducto'),
+                    $datos);
+
+        //return view( ['apiProducto' => $apiProducto]);
+
+
+
+
+
+
+
+        // //Consumir API Productos
+        // $response = Http::get('https://musicpro.bemtorres.win/api/v1/bodega/producto');
+        // $producto = $response -> json('productos');
+        // dump($producto);
+        // //return $response;
+
+        // return view('producto.index', $datos, compact('producto'));
+
     }
 
     /**
@@ -119,9 +138,9 @@ class ProductoController extends Controller
     {
         //
         return view('producto.create');
-        
+
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -129,8 +148,8 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
-    
+
+
        /**
      * Registrar la información de un producto
      * @OA\Post (
@@ -179,10 +198,10 @@ class ProductoController extends Controller
      *      )
      * )
      */
-    
-    
-    
-    
+
+
+
+
      public function store(Request $request)
     {
         //
@@ -195,6 +214,7 @@ class ProductoController extends Controller
             'Foto' => 'required|max:10000|mimes:jpeg,png,jpg',
 
         ];
+
         $mensaje=[
             'required' => 'El :attribute es requerido',
             'Foto.required' => 'La foto es requerida'
@@ -210,7 +230,7 @@ class ProductoController extends Controller
         }
 
         Producto::insert($datosProducto);
-        
+
         //return response()->json($datosProducto);
         return redirect ('producto')->with('mensaje','Producto agregado correctamente');
     }
@@ -221,10 +241,10 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    
-    
-    
-    
+
+
+
+
     /**
      * Mostrar la información de un producto
      * @OA\Get (
@@ -256,8 +276,8 @@ class ProductoController extends Controller
      *      )
      * )
      */
-    
-    
+
+
      public function show(Producto $producto)
     {
         //
@@ -286,8 +306,8 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    
-    
+
+
     /**
      * Actualizar la información de un Producto
      * @OA\Put (
@@ -342,10 +362,10 @@ class ProductoController extends Controller
      *      )
      * )
      */
-    
-    
-    
-    
+
+
+
+
      public function update(Request $request, $id)
     {
         //
@@ -355,7 +375,7 @@ class ProductoController extends Controller
             'Descripcion' => 'required|string|max:1000',
             'Precio' => 'required|numeric|max:99999',
             'Stock' => 'required|numeric|max:100',
-            
+
 
         ];
         $mensaje=[
@@ -366,10 +386,10 @@ class ProductoController extends Controller
             $campos=['Foto' => 'required|max:10000|mimes:jpeg,png,jpg'];
             $mensaje=['Foto.required' => 'La foto es requerida'];
         }
-        
+
         $this->validate($request, $campos, $mensaje);
-        
-        
+
+
         $datosProducto = request()->except(['_token','_method']);
 
         if($request->hasFile('Foto')){
@@ -393,9 +413,9 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    
-    
-    
+
+
+
      /**
      * Eliminar la información de un Producto
      * @OA\Delete (
@@ -420,14 +440,14 @@ class ProductoController extends Controller
      *      )
      * )
      */
-    
-    
-    
+
+
+
      public function destroy($id)
     {
         //
         $producto=Producto::findOrFail($id);
-        
+
         if(Storage::delete('public/'.$producto->Foto)){
 
             Producto::destroy($id);
@@ -454,7 +474,7 @@ class ProductoController extends Controller
         }
         return response()->json($producto,200);
     }
-    
+
     //INSERTAR API PRODUCTOS
     public function insertProducto(Request $request){
         $producto = Producto::create($request->all());
@@ -484,21 +504,21 @@ class ProductoController extends Controller
         return response()->json(['message'=>'Registro eliminado'],200);
     }
 
-    
-    
-    
-    
+
+
+
+
     //CARRO DE COMPRAS
     public function carro()
     {
         return view('carro');
     }
-    
+
     public function añadirCarrito($id){
         $producto = Producto::findOrFail($id);
 
         $carro = session()->get('carro', []);
- 
+
         if(isset($carro[$id])) {
             $carro[$id]['quantity']++;
         }  else {
@@ -526,6 +546,8 @@ class ProductoController extends Controller
             }
             session()->flash('success', 'Product removed successfully');
         }
+
+        return back()->with('success', 'Se ha eliminado');
     }
-    
+
 }

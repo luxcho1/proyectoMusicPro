@@ -12,16 +12,14 @@ class BoletaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
-     public function encomienda()
-     {
-         return view('encomienda');
-     }
-    
+
+
+
      public function index()
     {
         //
-        
+        return view('boleta');
+
     }
 
     /**
@@ -32,7 +30,7 @@ class BoletaController extends Controller
     public function create()
     {
         //
-        return view('carro');
+        //return view('carro');
     }
 
     /**
@@ -45,7 +43,6 @@ class BoletaController extends Controller
     {
         //
 
-        
         //$datosBoleta = request()->all();
         //$datosBoleta = request()->all();
         //Boleta::insert($datosBoleta);
@@ -53,29 +50,29 @@ class BoletaController extends Controller
         //return view('carro');
 
         //
-        $campos=[
-            'NombreOrigen' => 'required|string|max:100',
-            'DireccionOrigen' => 'required|string|max:100',
-            'NombreDestino' => 'required|string|max:100',
-            'DireccionOrigen' => 'required|string|max:100',
-            'Comentario' => 'required|string|max:100',
-            'Info' => 'required|string|max:100',
+        // $campos=[
+        //     'NombreOrigen' => 'required|string|max:100',
+        //     'DireccionOrigen' => 'required|string|max:100',
+        //     'NombreDestino' => 'required|string|max:100',
+        //     'DireccionOrigen' => 'required|string|max:100',
+        //     'Comentario' => 'required|string|max:100',
+        //     'Info' => 'required|string|max:100',
 
-        ];
-        $mensaje=[
-            'required' => 'El :attribute es requerido',
-        ];
+        // ];
+        // $mensaje=[
+        //     'required' => 'El :attribute es requerido',
+        // ];
 
-        $this->validate($request, $campos, $mensaje);
+        // $this->validate($request, $campos, $mensaje);
 
-        //$datosProducto = request()->all();
-        $datosEncomienda = request()->except('_token');
+        // //$datosProducto = request()->all();
+        // $datosEncomienda = request()->except('_token');
 
 
-        Producto::insert($datosEncomienda);
-        
-        //return response()->json($datosProducto);
-        return redirect ('encomienda')->with('mensaje','Encomienda agregada correctamente');
+        // Producto::insert($datosEncomienda);
+
+        // //return response()->json($datosProducto);
+        // return redirect ('encomienda')->with('mensaje','Encomienda agregada correctamente');
 
     }
 
