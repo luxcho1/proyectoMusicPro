@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Encomienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+
 
 class EncomiendaController extends Controller
 {
@@ -18,6 +20,7 @@ class EncomiendaController extends Controller
         //
         return view('encomienda');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +50,6 @@ class EncomiendaController extends Controller
             'info' => 'required|string|max:1000'
         ]);
 
-        // return $request;
         // Obtener los valores del formulario
         $nombre_origen     = $request->input('nombre_origen');
         $direccion_origen  = $request->input('direccion_origen');
@@ -58,19 +60,39 @@ class EncomiendaController extends Controller
 
         // $carro = session->get('carro');
 
-        // // Enviar la solicitud POST a la URL especificada
-        // $response = Http::post('https://musicpro.bemtorres.win/api/v1/transporte/solicitud', [
-        //     'nombre_origen'     => $nombre_origen,
-        //     'direccion_origen'  => $direccion_origen,
-        //     'nombre_destino'    => $nombre_destino,
-        //     'direccion_destino' => $direccion_destino,
-        //     'comentario'        => $comentario,
-        //     'info'              => $info
-        // ]);
+        //  Enviar la solicitud POST a la URL especificada
+        $response = Http::post('https://musicpro.bemtorres.win/api/v1/transporte/solicitud', [
+             'nombre_origen'     => $nombre_origen,
+             'direccion_origen'  => $direccion_origen,
+             'nombre_destino'    => $nombre_destino,
+             'direccion_destino' => $direccion_destino,
+             'comentario'        => $comentario,
+             'info'              => $info
+         ]);
 
-        // $codigo_seguimiento = $response['codigo_seguimiento'];
+        $codigo_seguimiento = $response['codigo_seguimiento'];
+
+        $response = Http::get('https://musicpro.bemtorres.win/api/v1/transporte/seguimiento/'. $codigo_seguimiento );
+        //return $response;
 
 
+
+         //Crear encomienda
+        $encomienda = new Encomienda;
+        $encomienda -> nombre_origen      = $request-> input('nombre_origen');
+        $encomienda -> direccion_origen   = $request-> input('direccion_origen');
+        $encomienda -> nombre_destino     = $request-> input('nombre_destino');
+        $encomienda -> direccion_destino  = $request-> input('direccion_destino');
+        $encomienda -> comentario         = $request-> input('comentario');
+        $encomienda -> info               = $request-> input('info');
+        $encomienda -> codigo_seguimiento = $codigo_seguimiento;
+        $encomienda -> estado_seguimiento = $response['result']['estado'];
+        $encomienda -> id_boleta          = rand(1000, 9999);
+        $encomienda ->save();
+
+
+        return redirect()->route('home');
+        Session::flash('message', 'Boleta creada correctamente');
     //     $response = Http::get('https://musicpro.bemtorres.win/api/v1/transporte/seguimiento/'. $codigo_seguimiento );
     //     // Redirigir a una página de confirmación u otra acción después de enviar la solicitud}
     //     return $response['result']['estado'];
@@ -78,8 +100,12 @@ class EncomiendaController extends Controller
         }
 
 
-
-
+    public function inventario()
+    {
+        $encomiendas = Encomienda::all();
+        return view('inventario',compact('encomiendas'));
+    }
+    
     public function getEncomienda(){
         return response()->json(Encomienda::all(),200);
     }

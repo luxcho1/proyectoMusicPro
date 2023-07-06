@@ -13,17 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('boletas', function (Blueprint $table) {
+        Schema::create('integracion_apis', function (Blueprint $table) {
             $table->id();
-            $table->string('num_boleta');
-            $table->string('fecha');
-            $table->string('hora');
-            $table->double('total');
-
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boletas');
+        Schema::dropIfExists('integracion_apis');
     }
 };

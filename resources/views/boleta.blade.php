@@ -8,42 +8,37 @@
 
 
 <body>
-   <div class="container">
+  <h1 style="text-align: center">Inventario de boletas</h1> 
+  <div class="container">
     <table class="table">
-        <thead>
+      <thead>
           <tr>
-            <th scope="col">ID Boleta</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Total</th>
+              <th>Número de boleta</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Total</th>
+              <th>Accion</th>
           </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Prueba 1</td>
-            <td>$1500</td>
-            <td>$4000</td>
-            <td>
-                <a href="{{ url('encomienda') }}" class="btn btn-success">Crear encomienda</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Prueba 2</td>
-            <td>$2500</td>
-            <td>$3500</td>
-            <td><button type="button" class="btn btn-primary">Crear encomienda</button></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Prueba 3</td>
-            <td>$2500</td>
-            <td>$3500</td>
-            <td><button type="button" class="btn btn-primary">Crear encomienda</button></td>
-          </tr>
-        </tbody>
-      </table>
+      </thead>
+      <tbody>
+          @foreach ($boletas as $boleta)
+              <tr>
+                  <td>  {{ $boleta->num_boleta }} </td>
+                  <td>  {{ $boleta->fecha }}      </td>
+                  <td>  {{ $boleta->hora }}       </td>
+                  <td>$ {{ $boleta->total }}      </td>
+                  <td> <a class="btn btn-success" href="{{ url('encomienda') }}">Crear encomienda</a> 
+                       <a href="{{ url('/boleta/'.$boleta->id.'/detalle') }}" class="btn btn-primary">
+                        Detalle boleta
+                       </a>
+                       
+                 </td>
+                       
+              </tr>
+          @endforeach
+      </tbody>
+  </table>
+  <a class="btn btn-primary" href="{{ url('/') }}">Regresar</a>
    </div>
 </body>
 

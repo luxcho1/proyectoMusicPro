@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('nombre_destino');
             $table->string('direccion_destino');
             $table->string('comentario');
-            $table->json('info')->nullable();
+            $table->string('info')->nullable();
             $table->string('codigo_seguimiento')->nullable();
-            $table->integer('id_boleta');
+            $table->string('estado_seguimiento')->nullable();
+            $table->string('id_boleta');
             $table->timestamps();
         });
     }
@@ -38,3 +39,19 @@ return new class extends Migration
         Schema::dropIfExists('encomiendas');
     }
 };
+
+
+
+// Schema::create('encomiendas', function (Blueprint $table) {
+//     $table->id();
+
+//     $table->string('nombre_origen');
+//     $table->string('direccion_origen');
+//     $table->string('nombre_destino');
+//     $table->string('direccion_destino');
+//     $table->string('comentario');
+//     $table->json('info')->nullable();
+//     $table->string('codigo_seguimiento')->nullable();
+//     $table->integer('id_boleta');
+//     $table->timestamps();
+// });

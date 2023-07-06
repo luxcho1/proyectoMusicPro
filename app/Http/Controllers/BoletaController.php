@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Boleta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Carbon;
+
+
 
 class BoletaController extends Controller
 {
@@ -18,9 +23,12 @@ class BoletaController extends Controller
      public function index()
     {
         //
-        return view('boleta');
+        $boletas = Boleta::all();
+        return view('boleta', compact('boletas'));
 
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -42,13 +50,28 @@ class BoletaController extends Controller
     public function store(Request $request)
     {
         //
+        //Crear Boleta
+        $boleta = new Boleta;
+        $boleta->num_boleta = strtoupper(Str::random(8)); 
+        $boleta->fecha = Carbon::now('America/Santiago')->format('d-m-Y');
+        $boleta->hora  = Carbon::now('America/Santiago')->toTimeString();
+        $boleta->Total = $request->input('Total');
+        $boleta->save();
 
-        //$datosBoleta = request()->all();
-        //$datosBoleta = request()->all();
-        //Boleta::insert($datosBoleta);
-        //return response()->json($datosBoleta);
-        //return view('carro');
 
+        return redirect()->route('home');
+        Session::flash('message', 'Boleta creada correctamente');
+
+        
+        // //
+        // $datosBoleta = request()->all();
+        // Boleta::insert($datosBoleta);
+        // //return response()->json($datosBoleta);
+        // return redirect()->route('home');
+
+        
+        
+        
         //
         // $campos=[
         //     'NombreOrigen' => 'required|string|max:100',
@@ -93,10 +116,14 @@ class BoletaController extends Controller
      * @param  \App\Models\Boleta  $boleta
      * @return \Illuminate\Http\Response
      */
-    public function edit(Boleta $boleta)
+    public function edit($id)
     {
         //
+        $boleta=Boleta::findOrFail($id);
+        return view('detalle',['boleta' => $boleta]);
+        
     }
+
 
     /**
      * Update the specified resource in storage.

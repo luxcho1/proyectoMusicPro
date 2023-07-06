@@ -530,7 +530,7 @@ class ProductoController extends Controller
             ];
         }
 
-        //['Nombre','Codigo','Descripcion','Precio','Stock','Foto'];
+        
 
         session()->put('carro', $carro);
         return redirect()->back()->with('success', 'Producto añadido al carro correctamente');

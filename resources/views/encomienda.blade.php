@@ -36,12 +36,12 @@
     <br>
     <div class="form-group">
         <label for="Stock">Info: </label>
-        <input class="form-control" type="text" name="info"  id="info" >
+        <input class="form-control" type="text" name="info"  id="info" value="BOUFFANAIS COMPANY" readonly>
     </div>
     <br>
     <div>
-        <a class="btn btn-primary" href="{{ url('home/') }}">Regresar</a>
-        <input class="btn btn-success" type="submit" value="Enviar Encomienda" href="{{ url('home/') }}">
+        <a class="btn btn-primary" href="{{ url('boleta') }}">Regresar</a>
+        <input class="btn btn-success" type="submit" value="Enviar Encomienda" href="{{ url('/') }}">
 
     </div>
 </div>

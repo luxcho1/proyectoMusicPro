@@ -97,9 +97,9 @@
             </div>
 
             {{--MOSTRAR API PRODUCTOS--}}
-            <h2 style="padding-block-start: 5%">Mostrar productos API</h2>
+            <h2 style="padding-block-start: 5%">Inventario API</h2>
             {{-- <h5>Consumo de api status: "{{ $apiProducto['message'] }}"</h5> --}}
-            <table class="table table-light">
+            {{-- <table class="table table-light">
                 <thead class="thead-light">
                     <tr>
                         <th>Foto</th>
@@ -122,11 +122,11 @@
                     </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
 
 
             {{--CRUD DE BODEGA--}}
-            <h1 style="padding-block-start: 5%">Mostrar productos de forma local</h1>
+            <h2 style="padding-block-start: 5%">Inventario Local</h2>
             <div class="container">
                 @if(session('success'))
                     <div class="alert alert-success">

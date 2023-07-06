@@ -30,14 +30,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto" >
+                        <a class="navbar-brand" href="{{ url('integracionapi') }}">
+                            API Code Con Clave
+                        </a>
                         <a class="navbar-brand" href="{{ url('producto/create') }}">
                             Ingresar producto
                         </a>
                         <a class="navbar-brand" href="{{ url('boleta') }}">
                             Inventario boletas
                         </a>
+                        <a class="navbar-brand"  href="{{ url('inventario') }}">
+                            Inventario encomienda
+                        </a>
                         <a class="navbar-brand" onclick="NewTab()" href="">
-                            Consultar encomienda
+                            Estado encomienda
                         </a>
                     </ul>
 
