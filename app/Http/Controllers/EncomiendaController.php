@@ -38,7 +38,7 @@ class EncomiendaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, BoletaController $boletaController)
     {
         // Validar los datos del formulario si es necesario
         $request->validate([
@@ -76,7 +76,9 @@ class EncomiendaController extends Controller
         //return $response;
 
 
-
+        
+        $num_boleta = session('num_boleta');
+        
          //Crear encomienda
         $encomienda = new Encomienda;
         $encomienda -> nombre_origen      = $request-> input('nombre_origen');
@@ -87,16 +89,11 @@ class EncomiendaController extends Controller
         $encomienda -> info               = $request-> input('info');
         $encomienda -> codigo_seguimiento = $codigo_seguimiento;
         $encomienda -> estado_seguimiento = $response['result']['estado'];
-        $encomienda -> id_boleta          = rand(1000, 9999);
-        $encomienda ->save();
+        $encomienda -> num_boleta          = $num_boleta;
 
 
         return redirect()->route('home');
         Session::flash('message', 'Boleta creada correctamente');
-    //     $response = Http::get('https://musicpro.bemtorres.win/api/v1/transporte/seguimiento/'. $codigo_seguimiento );
-    //     // Redirigir a una página de confirmación u otra acción después de enviar la solicitud}
-    //     return $response['result']['estado'];
-    // }
         }
 
 
@@ -106,17 +103,17 @@ class EncomiendaController extends Controller
         return view('inventario',compact('encomiendas'));
     }
     
-    public function getEncomienda(){
-        return response()->json(Encomienda::all(),200);
-    }
+    // public function getEncomienda(){
+    //     return response()->json(Encomienda::all(),200);
+    // }
 
-    public function insertEncomienda(Request $request){
-        $encomienda = Encomienda::create($request->all());
-        if(is_null($encomienda)){
-            return response()->json(['message'=>'Hubo un problema para ingresar'],404);
-        }
-        return response()->json($producto,200);
-    }
+    // public function insertEncomienda(Request $request){
+    //     $encomienda = Encomienda::create($request->all());
+    //     if(is_null($encomienda)){
+    //         return response()->json(['message'=>'Hubo un problema para ingresar'],404);
+    //     }
+    //     return response()->json($producto,200);
+    // }
 
     /**
      * Display the specified resource.

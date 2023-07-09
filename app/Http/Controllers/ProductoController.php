@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Http\Controllers\BoletaController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -529,9 +531,7 @@ class ProductoController extends Controller
                 "quantity" => 1
             ];
         }
-
         
-
         session()->put('carro', $carro);
         return redirect()->back()->with('success', 'Producto añadido al carro correctamente');
     }

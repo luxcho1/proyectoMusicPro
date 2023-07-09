@@ -41,7 +41,7 @@
     <br>
     <div>
         <a class="btn btn-primary" href="{{ url('boleta') }}">Regresar</a>
-        <input class="btn btn-success" type="submit" value="Enviar Encomienda" href="{{ url('/') }}">
+        <input class="btn btn-success" type="submit" value="Enviar Encomienda" href="{{ url('/boleta') }}">
 
     </div>
 </div>

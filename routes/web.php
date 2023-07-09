@@ -27,6 +27,7 @@ Route::resource ('carro',           BoletaController::class)             -> midd
 Route::resource ('encomienda',      EncomiendaController::class)         -> middleware('auth');
 Route::resource ('boleta',          BoletaController::class)             -> middleware('auth');
 Route::resource ('integracionapi',  IntegracionApiController::class)     -> middleware('auth');
+Route::resource ('detalle',         DetalleBoletaController::class)      -> middleware('auth');
 Auth::routes([]);
 //Route::get('/home', [ProductoController::class, 'index'])->name('home');
 
@@ -48,10 +49,15 @@ Route::group(['middleware' => 'auth'], function() {
     //CONTROLADOR BOLETA DETALLE
     //Route::get('detalle', [DetalleBoletaController::class, 'index']);
     Route::get('/boleta/{id}/detalle', [BoletaController::class, 'edit']);
+    
 
 
     //CONTROLADOR INTEGRACION
     Route::get('integracionapi', [IntegracionApiController::class, 'index']);
+
+
+    Route::get('detalle', [DetalleBoletaController::class, 'detalle']);
+    
     
 
     

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Boleta;
+use App\Models\DetalleBoleta;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Date;
@@ -50,53 +52,43 @@ class BoletaController extends Controller
     public function store(Request $request)
     {
         //
-        //Crear Boleta
+        // Obtener el carrito desde la sesión
+        $carro = session()->get('carro');
+
+        // Crear una nueva instancia de Boleta
         $boleta = new Boleta;
-        $boleta->num_boleta = strtoupper(Str::random(8)); 
+        $boleta->num_boleta = strtoupper(Str::random(8));
         $boleta->fecha = Carbon::now('America/Santiago')->format('d-m-Y');
-        $boleta->hora  = Carbon::now('America/Santiago')->toTimeString();
+        $boleta->hora = Carbon::now('America/Santiago')->toTimeString();
         $boleta->Total = $request->input('Total');
         $boleta->save();
 
+        // Guardar los productos del carrito en la boleta
+        foreach ($carro as $id => $producto) {
+            $nombre = $producto['Nombre'];
+            $foto = $producto['Foto'];
+            $precio = $producto['Precio'];
+            $cantidad = $producto['quantity'];
+
+            // Obtener el número de boleta truncado para ajustarse a la longitud máxima permitida
+            $numBoleta = substr($boleta->num_boleta, 0, 8);
+
+            // Guardar los detalles del producto en la boleta
+            $detalle = new DetalleBoleta;
+            $detalle->num_boleta = $numBoleta;
+            $detalle->detalle = $nombre;
+            $detalle->cantidad = $cantidad;
+            $detalle->precio = $precio;
+            $detalle->total = $cantidad * $precio;
+            $detalle->save();
+         }
+
+
+        // Limpiar el carrito de la sesión después de utilizarlo si es necesario
+        session()->forget('carro');
 
         return redirect()->route('home');
         Session::flash('message', 'Boleta creada correctamente');
-
-        
-        // //
-        // $datosBoleta = request()->all();
-        // Boleta::insert($datosBoleta);
-        // //return response()->json($datosBoleta);
-        // return redirect()->route('home');
-
-        
-        
-        
-        //
-        // $campos=[
-        //     'NombreOrigen' => 'required|string|max:100',
-        //     'DireccionOrigen' => 'required|string|max:100',
-        //     'NombreDestino' => 'required|string|max:100',
-        //     'DireccionOrigen' => 'required|string|max:100',
-        //     'Comentario' => 'required|string|max:100',
-        //     'Info' => 'required|string|max:100',
-
-        // ];
-        // $mensaje=[
-        //     'required' => 'El :attribute es requerido',
-        // ];
-
-        // $this->validate($request, $campos, $mensaje);
-
-        // //$datosProducto = request()->all();
-        // $datosEncomienda = request()->except('_token');
-
-
-        // Producto::insert($datosEncomienda);
-
-        // //return response()->json($datosProducto);
-        // return redirect ('encomienda')->with('mensaje','Encomienda agregada correctamente');
-
     }
 
     /**
@@ -118,11 +110,19 @@ class BoletaController extends Controller
      */
     public function edit($id)
     {
-        //
-        $boleta=Boleta::findOrFail($id);
-        return view('detalle',['boleta' => $boleta]);
+        // Obtener la boleta según el ID proporcionado
+        $boleta = Boleta::findOrFail($id);
+
+        // Obtener los detalles de la boleta según el número de boleta de la boleta
+        $detalleBoleta = DetalleBoleta::where('num_boleta', $boleta->num_boleta)->get();
+
+        // Pasar la boleta y los detalles de la boleta a la vista
         
+        return view('detalle', compact('boleta', 'detalleBoleta'));
+        session(['num_boleta' => $boleta->num_boleta]);
     }
+    
+    
 
 
     /**
@@ -147,4 +147,6 @@ class BoletaController extends Controller
     {
         //
     }
+
+
 }

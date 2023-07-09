@@ -97,7 +97,7 @@
             </div>
 
             {{--MOSTRAR API PRODUCTOS--}}
-            <h2 style="padding-block-start: 5%">Inventario API</h2>
+            {{-- <h2 style="padding-block-start: 5%">Inventario API</h2> --}}
             {{-- <h5>Consumo de api status: "{{ $apiProducto['message'] }}"</h5> --}}
             {{-- <table class="table table-light">
                 <thead class="thead-light">

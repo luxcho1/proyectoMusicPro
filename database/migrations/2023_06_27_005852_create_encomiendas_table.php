@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('encomiendas', function (Blueprint $table) {
             $table->id();
 
+            $table->string('num_boleta');
             $table->string('nombre_origen');
             $table->string('direccion_origen');
             $table->string('nombre_destino');
@@ -24,7 +25,6 @@ return new class extends Migration
             $table->string('info')->nullable();
             $table->string('codigo_seguimiento')->nullable();
             $table->string('estado_seguimiento')->nullable();
-            $table->string('id_boleta');
             $table->timestamps();
         });
     }

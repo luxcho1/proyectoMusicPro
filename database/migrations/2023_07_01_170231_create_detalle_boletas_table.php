@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('detalle_boletas', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('num_boleta');
-            $table->integer('detalle');
+            $table->string('num_boleta');
+            $table->string('detalle');
             $table->integer('cantidad');
             $table->integer('precio');
             $table->integer('total');

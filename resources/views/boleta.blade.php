@@ -27,7 +27,7 @@
                   <td>  {{ $boleta->fecha }}      </td>
                   <td>  {{ $boleta->hora }}       </td>
                   <td>$ {{ $boleta->total }}      </td>
-                  <td> <a class="btn btn-success" href="{{ url('encomienda') }}">Crear encomienda</a> 
+                  <td> 
                        <a href="{{ url('/boleta/'.$boleta->id.'/detalle') }}" class="btn btn-primary">
                         Detalle boleta
                        </a>

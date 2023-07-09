@@ -17,6 +17,7 @@ class DetalleBoletaController extends Controller
         //
         //return view('detalle');
     }
+    
 
 
     

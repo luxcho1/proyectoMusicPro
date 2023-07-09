@@ -7,39 +7,36 @@
 </head>
 
 <body>
-    <h1 style="text-align: center">Detalle</h1> 
+    <h1 style="text-align: center">Detalle de boleta</h1> 
     <div class="container">
-      <table class="table">
-        <thead>
-            <tr>
-                <th>Foto</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
+        <h4>Número de boleta: {{ $boleta->num_boleta }}</h4>
+        <h5>Fecha: {{ $boleta->fecha }}</h5>
+        <h5>Hora: {{ $boleta->hora }}</h5>
 
-        <tbody>
-            <td>  {{ $boleta->num_boleta }} </td>
-            <td>  {{ $boleta->hora }}      </td>
-            {{-- @foreach ($encomiendas as $encomienda)
+        <table class="table">
+            <thead class="thead-dark">
                 <tr>
-                    <td>  {{ $encomienda->nombre_origen }} </td>
-                    <td>  {{ $encomienda->direccion_origen }} </td>
-                    <td>  {{ $encomienda->nombre_destino }} </td>
-                    <td>  {{ $encomienda->direccion_destino }} </td>
-                    <td>  {{ $encomienda->comentario }} </td>
-                    <td>  {{ $encomienda->info }} </td>
-                    <td>  {{ $encomienda->codigo_seguimiento }} </td>
-                    <td>  {{ $encomienda->estado_seguimiento }} </td>
-                    <td>  {{ $encomienda->id_boleta }} </td>
+                    <th>Producto Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
                 </tr>
-            @endforeach --}}
-        </tbody>
-    </table>
-    <a class="btn btn-primary" href="{{ url('boleta') }}">Regresar</a>
-     </div>
+            </thead>
+            <tbody>
+                @foreach ($detalleBoleta as $detalle)
+                    <tr>
+                        <td>{{ $detalle->detalle }}</td>
+                        <td>{{ $detalle->cantidad }}</td>
+                        <td>{{ $detalle->precio }}</td>
+                        <td>{{ $detalle->total }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <h4>Total: {{ $boleta->total }}</h4>
+        <a class="btn btn-primary" href="{{ url('boleta') }}">Regresar</a>
+        <a class="btn btn-success" href="{{ url('encomienda') }}">Crear encomienda</a> 
+    </div>
   </body>
   
   
