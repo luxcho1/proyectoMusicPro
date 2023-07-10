@@ -38,6 +38,4 @@
         <a class="btn btn-success" href="{{ url('encomienda') }}">Crear encomienda</a> 
     </div>
   </body>
-  
-  
   @endsection

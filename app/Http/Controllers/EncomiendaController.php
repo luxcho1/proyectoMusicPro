@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Encomienda;
+use App\Models\Boleta;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -18,8 +20,17 @@ class EncomiendaController extends Controller
     public function index()
     {
         //
-        return view('encomienda');
+        //return view('encomienda');
+
+        $num_boleta = session('num_boleta');
+
+
+        return view('encomienda', compact('num_boleta'));
+        //dd($num_boleta);
     }
+
+
+    
 
 
     /**
@@ -31,7 +42,6 @@ class EncomiendaController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -89,7 +99,8 @@ class EncomiendaController extends Controller
         $encomienda -> info               = $request-> input('info');
         $encomienda -> codigo_seguimiento = $codigo_seguimiento;
         $encomienda -> estado_seguimiento = $response['result']['estado'];
-        $encomienda -> num_boleta          = $num_boleta;
+        $encomienda -> num_boleta         = $num_boleta;
+        $encomienda->save();
 
 
         return redirect()->route('home');

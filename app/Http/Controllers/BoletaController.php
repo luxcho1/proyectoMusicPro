@@ -108,19 +108,36 @@ class BoletaController extends Controller
      * @param  \App\Models\Boleta  $boleta
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit($id)
     {
         // Obtener la boleta según el ID proporcionado
         $boleta = Boleta::findOrFail($id);
 
+        // Guardar el número de boleta en la sesión
+        session(['num_boleta' => $boleta->num_boleta]);
+
         // Obtener los detalles de la boleta según el número de boleta de la boleta
         $detalleBoleta = DetalleBoleta::where('num_boleta', $boleta->num_boleta)->get();
 
         // Pasar la boleta y los detalles de la boleta a la vista
-        
         return view('detalle', compact('boleta', 'detalleBoleta'));
-        session(['num_boleta' => $boleta->num_boleta]);
     }
+
+    // public function edit($id)
+    // {
+    //     // Obtener la boleta según el ID proporcionado
+    //     $boleta = Boleta::findOrFail($id);
+
+    //     // Obtener los detalles de la boleta según el número de boleta de la boleta
+    //     $detalleBoleta = DetalleBoleta::where('num_boleta', $boleta->num_boleta)->get();
+
+    //     // Pasar la boleta y los detalles de la boleta a la vista
+        
+    //     return view('detalle', compact('boleta', 'detalleBoleta'));
+    //     session(['num_boleta' => $boleta->num_boleta]);
+    // }
     
     
 

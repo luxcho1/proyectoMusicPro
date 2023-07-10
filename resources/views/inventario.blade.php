@@ -12,6 +12,7 @@
       <table class="table">
         <thead>
             <tr>
+                <th>Número Boleta</th>
                 <th>Nombre Origen</th>
                 <th>Direccion Origen</th>
                 <th>Nombre Destino</th>
@@ -20,13 +21,13 @@
                 <th>Info</th>
                 <th>Codigo Seguimiento</th>
                 <th>Estado Seguimiento</th>
-                <th>Id_boleta</th>
             </tr>
         </thead>
 
         <tbody>
             @foreach ($encomiendas as $encomienda)
                 <tr>
+                    <td>  {{ $encomienda->num_boleta }} </td>
                     <td>  {{ $encomienda->nombre_origen }} </td>
                     <td>  {{ $encomienda->direccion_origen }} </td>
                     <td>  {{ $encomienda->nombre_destino }} </td>
@@ -35,7 +36,6 @@
                     <td>  {{ $encomienda->info }} </td>
                     <td>  {{ $encomienda->codigo_seguimiento }} </td>
                     <td>  {{ $encomienda->estado_seguimiento }} </td>
-                    <td>  {{ $encomienda->id_boleta }} </td>
                 </tr>
             @endforeach
         </tbody>
@@ -43,6 +43,8 @@
     <a class="btn btn-primary" href="{{ url('/') }}">Regresar</a>
      </div>
   </body>
+  
+  
   
   
   @endsection
